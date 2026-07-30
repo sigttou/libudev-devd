@@ -69,7 +69,7 @@ udev_enumerate_ref(struct udev_enumerate *ue)
 	return (ue);
 }
 
-LIBUDEV_EXPORT void
+LIBUDEV_EXPORT struct udev_enumerate *
 udev_enumerate_unref(struct udev_enumerate *ue)
 {
 
@@ -80,6 +80,7 @@ udev_enumerate_unref(struct udev_enumerate *ue)
 		udev_unref(ue->udev);
 		free(ue);
 	}
+	return (NULL);
 }
 
 LIBUDEV_EXPORT int

@@ -229,7 +229,7 @@ LIBUDEV_EXPORT struct udev_monitor *
 udev_monitor_new_from_netlink(struct udev *udev, const char *name)
 {
 	struct udev_monitor *um;
-	
+
 	TRC("(%p, %s)", udev, name);
 	um = calloc(1, sizeof(struct udev_monitor));
 	if (!um)
@@ -318,7 +318,7 @@ udev_monitor_queue_drop(struct udev_monitor_queue_head *umqh)
 	}
 }
 
-LIBUDEV_EXPORT void
+LIBUDEV_EXPORT struct udev_monitor *
 udev_monitor_unref(struct udev_monitor *um)
 {
 	TRC("(%p) refcount=%d", um, um->refcount);
@@ -329,9 +329,10 @@ udev_monitor_unref(struct udev_monitor *um)
 		udev_filter_free(&um->filters);
 		udev_monitor_queue_drop(&um->queue);
 		pthread_mutex_destroy(&um->mtx);
-		_udev_unref(um->udev);
+		(void)_udev_unref(um->udev);
 		free(um);
 	}
+	return (NULL);
 }
 
 LIBUDEV_EXPORT
