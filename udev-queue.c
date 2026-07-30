@@ -62,6 +62,8 @@ udev_queue_new(struct udev *udev)
 LIBUDEV_EXPORT struct udev_queue *
 udev_queue_ref(struct udev_queue *uq)
 {
+	if (uq == NULL)
+		return (NULL);
 	TRC("(%p) refcount=%d", uq, uq->refcount);
 	++uq->refcount;
 	return (uq);
@@ -70,6 +72,8 @@ udev_queue_ref(struct udev_queue *uq)
 LIBUDEV_EXPORT struct udev_queue *
 udev_queue_unref(struct udev_queue *uq)
 {
+	if (uq == NULL)
+		return (NULL);
 	TRC("(%p) refcount=%d", uq, uq->refcount);
 	if (--uq->refcount == 0) {
 		if (uq->fd >= 0)
